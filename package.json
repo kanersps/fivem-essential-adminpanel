@@ -1,0 +1,19 @@
+{
+  "name": "es_adminpanel",
+  "version": "1.0.0",
+  "description": "An admin panel for FiveM. Requires es_adminpanel as resource.",
+  "main": "app.js",
+  "dependencies": {
+    "argon2": "^0.15.0",
+    "express": "^4.14.1",
+    "jsonfile": "^2.4.0",
+    "quake3-rcon": "^0.2.1",
+    "socket.io": "^1.7.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "Kanersps",
+  "license": "ISC"
+}

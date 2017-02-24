@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!--Import Google Icon Font-->
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<!-- Compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+		<style>
+			body, html {
+				background: #f1f1f1;
+				width: 100%;
+				height: 100%;
+			}
+			.btn-pl {
+				background: #536dfe;
+			}
+			.btn-pl:hover{
+				background: #8c9eff;
+			}
+			.p-username {
+				font-weight: bold;
+				color: white;
+			}
+			.btn-refresh {
+				background: #304ffe;
+			}
+			.btn-refresh:hover {
+				background: #536dfe;
+			}
+			.chat-message {
+				padding: 3px;
+			}
+			.resource {
+				padding: 15px;
+			}
+			.btn-rs-func {
+				margin-left: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="setrank" class="modal">
+			<div class="modal-content">
+				<div class="input-field col s12">
+					<i class="material-icons prefix">star</i>
+					<input id="settingrank" type="text" class="validate">
+					<label for="settingrank">Rank</label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat btn-setrank">Set</a>
+				<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+			</div>
+		</div>
+		<div id="setmoney" class="modal">
+			<div class="modal-content">
+				<div class="input-field col s12">
+					<i class="material-icons prefix">work</i>
+					<input id="settingmoney" type="text" class="validate">
+					<label for="settingmoney">Money</label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat btn-setmoney">Set</a>
+				<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+			</div>
+		</div>
+		<div id="stopserverconfirm" class="modal">
+			<div class="modal-content">
+				<p>Are you sure you want to stop the server?</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+				<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat btn-stopserver">Yes</a>
+			</div>
+		</div>
+		<div id="login">
+			<div class="container">
+				<div class="col s12 m7">
+					<div class="card horizontal">
+						<div class="card-stacked">
+							<form onsubmit="return false;">
+								<div class="card-content">
+									<div class="input-field col s6">
+										<i class="material-icons prefix">lock</i>
+										<input id="password" type="password" class="validate">
+										<label for="password">Password</label>
+									</div>
+								</div>
+								<div class="card-action">
+									
+									<button class="btn waves-effect waves-light login-btn" type="submit" name="action">Login
+										<i class="material-icons right">send</i>
+									</button>
+									
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="loggedin" style="display: none; width: 100%; overflow-x: hidden;">
+			<div class="navbar-fixed" style="margin-bottom: 4rem;">
+				<nav class="nav-extended" style="background: #303f9f">
+					<div class="nav-wrapper container">
+						<a href="#" class="brand-logo">EssentialMode Admin Panel</a>
+					</div>
+					<div class="nav-content container">
+						<ul class="tabs tabs-transparent">
+							<li class="tab"><a class="active" href="#tab_players">Players</a></li>
+							<li class="tab"><a href="#server">Server</a></li>
+							<li class="tab"><a href="#chat">Chat</a></li>
+							<li class="tab"><a href="#resources">Resources</a></li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+			<div class="container" style="bottom: 0; top: 0;">
+				<div id="tab_players" class="col s12">
+					<h4 style="font-size: 1.9rem; color: #333">Players<a class="waves-effect waves-light btn btn-refresh right" style="font-size: 1rem;">Refresh</a></h4>
+					<div id="player-base" style="display: none;">
+						<div class="card horizontal hoverable">
+							<div class="card-stacked">
+								<div class="card-content"> 
+									<p class="p-username" style="color: #333">Username</p>
+								</div>
+								<div class="card-action">
+									<div class="row">
+										<a class="waves-effect waves-light btn btn-kick col s12 m3 btn-flat btn-pl" style="border-radius: 0; color: white; margin-top: 3px;">Kick</a>
+										<a class="waves-effect waves-light btn btn-rank col s12 m3 btn-flat btn-pl" style="border-radius: 0; color: white; margin-top: 3px;">Set rank</a>
+										<a class="waves-effect waves-light btn btn-slay col s12 m3 btn-flat btn-pl" style="border-radius: 0; color: white; margin-top: 3px;">Slay</a>
+										<a class="waves-effect waves-light btn btn-money col s12 m3 btn-flat btn-pl" style="border-radius: 0; color: white; margin-top: 3px;">Set money</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="players">
+					</div>
+				</div>
+				<div id="server" class="col s12">
+					<div class="row">
+						<h4 class="col s12 m11">Server utilities</h4>
+						<a class="waves-effect waves-light btn btn-stopservers red col s12 m1" style="font-size: 1rem; margin-top: 1.4rem; margin-right: 0;">Stop server</a>
+						<div class="input-field col s12 m10" style="margin-top: 1.5rem;">
+							<input placeholder="Message" id="srv-message" type="text" class="validate">
+							<label for="srv-message">Broadcast serverwide message</label>
+						</div>
+						<a class="waves-effect waves-light btn btn-sendservermsg col s12 m2 btn-pl" style="margin-top: 2.05rem;">Send</a>
+						<div class="input-field col s12 m10" style="margin-top: 1.5rem;">
+							<input placeholder="Command" id="srv-command" type="text" class="validate">
+							<label for="srv-command">Run rcon command</label>
+						</div>
+						<a class="waves-effect waves-light btn btn-sendservercommand col s12 m2 btn-pl" style="margin-top: 2.05rem;">Run</a>
+					</div>
+				</div>
+				<div id="chat" class="col s12" style="height: 80vh; overflow-y: scroll; ">
+				</div>
+				<div id="resources" class="col s12"></div>
+			</div>
+		</div>
+		<!-- Compiled and minified JavaScript -->
+		<script
+			src="https://code.jquery.com/jquery-3.1.1.min.js"
+			integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+		crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+		<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+		<script>
+			var socket = io();
+			$(".login-btn").click(function(){
+				socket.emit('login', $("#password").val());
+			})
+			$(".btn-refresh").click(function(){
+				$(".btn-refresh").addClass("disabled")
+				$(".btn-refresh").text("Refreshing...")
+				socket.emit('func', 'refresh')
+			})
+			var currentSelected;
+			var setPlayers = function(players){
+				for(var i in players){
+					var elm = $("#player-base").clone();
+					elm.attr('id', 'player_' + i)
+					elm.addClass("player")
+					elm.css("display", 'block')
+					var tag = ""
+					if(players[i].rank > 0)
+						tag = '<span class="new badge red" data-badge-caption="' + players[i].rank + '">Rank </span>'
+					elm.find('p').html(tag + "" + players[i].username)
+					elm.appendTo("#players");
+					(function(u, elm){
+						elm.find(".btn-kick").click(function(){
+							elm.find('p').html("<b>Kicking...</b>")
+							socket.emit('func', 'kick', u)
+							setTimeout(function(){
+								elm.find('p').html("<b>Kick failed</b>")
+							}, 4000)
+						});
+						elm.find(".btn-rank").click(function(){
+							currentSelected = u;
+							$("#setrank").modal('open');
+						})
+						elm.find(".btn-money").click(function(){
+							currentSelected = u;
+							$("#setmoney").modal('open');
+						})
+						elm.find(".btn-slay").click(function(){
+							socket.emit('func', 'slay', u)
+						})
+					})(i, elm)
+				}
+			}
+			$(document).ready(function(){
+				$('.modal').modal();
+				$(".btn-setrank").click(function(){
+					if(currentSelected !== undefined && $("#settingrank").val() != "" && $("#settingrank").val() != undefined)
+						socket.emit('func', 'setmoney', currentSelected, $("#settingrank").val())
+					$("#settingrank").val("");
+				})
+				$(".btn-setmoney").click(function(){
+					if(currentSelected !== undefined && $("#settingmoney").val() != "" && $("#settingmoney").val() != undefined)
+						socket.emit('func', 'setmoney', currentSelected, parseInt($("#settingmoney").val()))
+					$("#settingmoney").val("");
+				})
+				$(".btn-stopserver").click(function(){
+					socket.emit('func', 'stop')
+				})
+				$(".btn-stopservers").click(function(){
+					$("#stopserverconfirm").modal('open')
+				})
+				$(".btn-sendservercommand").click(function() {
+					socket.emit('func', 'run', $("#srv-command").val())
+				})
+				$(".btn-sendservermsg").click(function(){
+					socket.emit('func', 'message', null, $("#srv-message").val())
+				})
+				socket.on('success', function(players, chat, srv){
+					$("#login").css('display', "none")
+					$("#loggedin").css('display', "inline-block")
+					setPlayers(players)
+					for(var i in chat)
+						$("#chat").append("<div class='chat-message'>" + chat[i] + "</div>")
+					for(var i in srv.resources){
+						var elm = $('<div class="resource">' + srv.resources[i] + '<a class="waves-effect btn-rs-func waves-light btn right btn-restart">Restart</a> <a class="waves-effect hide-on-med-and-down btn-start waves-light btn right btn-rs-func">Start</a> <a class="waves-effect hide-on-small-only waves-light btn right btn-stop btn-rs-func">Stop</a></div>');
+						(function(id){
+							elm.find(".btn-restart").click(function(){
+								socket.emit('func', 'restartr', srv.resources[id]);
+							})
+							elm.find(".btn-start").click(function(){
+								socket.emit('func', 'startr', srv.resources[id]);
+							})
+							elm.find(".btn-stop").click(function(){
+								socket.emit('func', 'stopr', srv.resources[id]);
+							})
+						})(i)
+						$("#resources").append(elm);
+					}
+				})
+				socket.on('chat', function(msg){
+					$("#chat").append("<div class='chat-message'>" + msg + "</div>")
+				})
+				socket.on('toast', function(m){
+					Materialize.toast(m, 4000)
+				})
+				socket.on('kicked', function(p){
+					$("#player_" + p).fadeOut(400, function(){
+						$(this).remove();
+					})
+				})
+				socket.on('refresh', function(players){
+					$(".btn-refresh").removeClass("disabled")
+					$(".btn-refresh").text("Refresh")
+					$(".player").remove();
+					setPlayers(players)
+				})
+				socket.on('rankset', function(u, r, name){
+					var tag = ""
+					if(r > 0)
+						tag = '<span class="new badge red" data-badge-caption="' + r + '">Rank </span>'
+					$("#player_" + u).find('p').html(tag + "" + name)
+				})
+			})
+		</script>
+	</body>
+</html>

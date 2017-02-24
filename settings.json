@@ -1,0 +1,6 @@
+{
+   "server_ip": "127.0.0.1",
+   "server_port": 30120,
+   "rcon_password": "lovely!",
+   "admin_password": "$argon2d$v=19$m=4096,t=3,p=1$DNpnZl0Rxiqeylis6C7n6w$NxW8WHDmC/gZNp6g2Vvz+ipBqZa6pwiSPibzoiNMrDs"
+}
